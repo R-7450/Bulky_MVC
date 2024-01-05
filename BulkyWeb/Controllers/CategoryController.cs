@@ -14,8 +14,8 @@ namespace BulkyWeb.Controllers
         }
         public IActionResult Index()
         {
-           List<Category>  objCategoryList = _Db.Categories.ToList(); // command is used all the records from cateory table
-            return View();
+           List<Category>  objCategoryList = _Db.Categories.ToList(); // command is used all the records from category table
+            return View(objCategoryList);
         }
     }
 }
