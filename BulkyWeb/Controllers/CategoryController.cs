@@ -23,11 +23,12 @@ namespace BulkyWeb.Controllers
         }
         [HttpPost]
         public IActionResult Create(Category obj)// when we hit create button after filling form then it create a post request that why we are using httppost
-        {  
-            if(obj.Name==obj.DisplayOrder.ToString())
+        {
+            if (obj.Name == obj.DisplayOrder.ToString()) // this condition is for custom validation 
             {
-                ModelState.AddModelError("Name" ,"DisplayOrder can not match exactly the same");
+                ModelState.AddModelError("Name", "DisplayOrder can not match exactly the same");
             }
+
             if (ModelState.IsValid)
              {
                 _Db.Categories.Add(obj);
