@@ -38,5 +38,59 @@ namespace BulkyWeb.Controllers
           return View();
            
         }
+        public IActionResult Edit(int? id)  // if something is not mention by default this will be Get  Action
+        {
+            if(id==null||id==0)
+            {
+                return NotFound();
+            }
+            Category? categoryFromDb = _Db.Categories.Find(id); // find method work on only primary key only
+            //Category? categoryFromDb1 = _Db.Categories.FirstOrDefault(c => c.Id == id);// this is another method to find category list
+            if(categoryFromDb==null)
+            {
+                return NotFound();
+            }
+            return View(categoryFromDb);
+        }
+        [HttpPost]    // below Edit Action is Post Action
+        public IActionResult Edit(Category obj)// when we hit create button after filling form then it create a post request that why we are using httppost
+        {
+       
+            if (ModelState.IsValid)
+            {
+                _Db.Categories.Update(obj);
+                _Db.SaveChanges(); // save all the changes made in this context to database
+                return RedirectToAction("Index"); //it will redirect to action name  index  and execute the code inside that
+            }
+            return View();
+
+        }
+        public IActionResult Delete(int? id)  // if something is not mention by default this will be Get  Action
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Category? categoryFromDb = _Db.Categories.Find(id); // find method work on only primary key only
+            //Category? categoryFromDb1 = _Db.Categories.FirstOrDefault(c => c.Id == id);// this is another method to find category list
+            if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+            return View(categoryFromDb);
+        }
+        [HttpPost,ActionName("Delete")]  
+        public IActionResult DeletePost(int? id )// when we hit create button after filling form then it create a post request that why we are using httppost
+        {
+            Category? obj=_Db.Categories.Find(id);// since both the method have same name thats why we name this method as deletepost
+            if(obj==null)
+            {
+                return NotFound();
+            }
+            _Db.Categories.Remove(obj);
+            _Db.SaveChanges();
+            return RedirectToAction("Index");    
+
+        }
     }
 }
