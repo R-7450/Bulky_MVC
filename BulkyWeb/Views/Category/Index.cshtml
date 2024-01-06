@@ -1,4 +1,8 @@
 ﻿@model List<Category>
+   @if(TempData["success"]!=null)
+{
+    <h2>@TempData["success"]</h2>
+}
 <div class="container">
     <div class=" row pt-4 pb-3">                @*padding top 4 padding bottom 4, so we are creating a row inside a container which have by default 12 columns *@
         <div class="col-6">
