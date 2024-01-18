@@ -13,7 +13,8 @@ namespace Bulky.Models
         public int Id { get; set; }            // this will be our primary key
                                                // `[Required]` attribute is used to specify that a property or parameter is required and must have a value
         [Required]
-        public string Title { get; set; }    
+        public string Title { get; set; }
+        
         public string Description { get; set; }
         [Required]
         public string ISBN { get; set; }
