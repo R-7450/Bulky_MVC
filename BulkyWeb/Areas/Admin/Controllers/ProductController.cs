@@ -3,6 +3,7 @@ using Bulky.DataAccess.Data;
 using Bulky.DataAccess.Repository;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
+using Bulky.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
@@ -22,35 +23,42 @@ namespace BulkyWeb.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Product> objProductList = _unitOfWork.Product.GetAll().ToList(); // command is used all the records from product table
-          
+
             return View(objProductList);
         }
         public IActionResult Create()
         {
-               IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category
-               .GetAll().Select(u => new SelectListItem
-               {
-                   Text = u.Name,                // using projection in EF core we can do dynamic conversion on type while retreiving data from database
-                   Value = u.Id.ToString()
-               });
-
-            //  ViewBag.CategoryList = CategoryList;
-            ViewData["CategoryList"] = CategoryList;
-            return View();
+            ProductVM productVM = new()
+            {
+                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+                Product = new Product()
+            };
+            return View(productVM);
         }
+
         [HttpPost]
-        public IActionResult Create(Product obj)// when we hit create button after filling form then it create a post request that why we are using httppost
+        public IActionResult Create(ProductVM productVM)
         {
-            
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(obj);
-                _unitOfWork.Save(); // save all the changes made in this context to database
+                _unitOfWork.Product.Add(productVM.Product);
+                _unitOfWork.Save();
                 TempData["success"] = "Product created successfully";
-                return RedirectToAction("Index"); //it will redirect to action name  index  and execute the code inside that
+                return RedirectToAction("Index");
             }
-            return View();
-
+            else
+            {
+                productVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+                return View(productVM);
+            }
         }
         public IActionResult Edit(int? id)  // if something is not mention by default this will be Get  Action
         {
@@ -110,3 +118,4 @@ namespace BulkyWeb.Areas.Admin.Controllers
         }
     }
 }
+
