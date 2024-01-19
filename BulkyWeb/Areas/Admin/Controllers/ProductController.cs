@@ -26,7 +26,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
             return View(objProductList);
         }
-        public IActionResult Create()
+        public IActionResult Upsert(int ? id)
         {
             ProductVM productVM = new()
             {
@@ -37,11 +37,22 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 }),
                 Product = new Product()
             };
-            return View(productVM);
+            if(id==null || id==0)
+            {
+                //create
+                return View(productVM);
+            }
+            else
+            {    
+                //update
+                productVM.Product = _unitOfWork.Product.Get(u => u.Id == id);
+                return View(productVM);
+            }
+           
         }
 
         [HttpPost]
-        public IActionResult Create(ProductVM productVM)
+        public IActionResult Upsert(ProductVM productVM,IFormFile? file)
         {
             if (ModelState.IsValid)
             {
@@ -60,34 +71,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 return View(productVM);
             }
         }
-        public IActionResult Edit(int? id)  // if something is not mention by default this will be Get  Action
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            Product? productFromDb = _unitOfWork.Product.Get(u => u.Id == id); // find method work on only primary key only
-            //Product? productFromDb1 = _Db.Categories.FirstOrDefault(c => c.Id == id);// this is another method to find product list
-            if (productFromDb == null)
-            {
-                return NotFound();
-            }
-            return View(productFromDb);
-        }
-        [HttpPost]    // below Edit Action is Post Action
-        public IActionResult Edit(Product obj)// when we hit create button after filling form then it create a post request that why we are using httppost
-        {
-
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.Product.Update(obj);
-                _unitOfWork.Save(); // save all the changes made in this context to database
-                TempData["success"] = "Product updated successfully";
-                return RedirectToAction("Index"); //it will redirect to action name  index  and execute the code inside that
-            }
-            return View();
-
-        }
+       
         public IActionResult Delete(int? id)  // if something is not mention by default this will be Get  Action
         {
             if (id == null || id == 0)
