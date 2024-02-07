@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using Bulky.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 
 namespace Bulky.DataAccess.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions <ApplicationDbContext> options): base(options)
         {
@@ -15,6 +15,8 @@ namespace Bulky.DataAccess.Data
         public DbSet<Product> Products { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)// to add records in Category Table we are using this function (OnModelCreating) which is present in DbContext class
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Category>().HasData(
                  new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
                  new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
