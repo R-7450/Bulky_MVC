@@ -10,7 +10,7 @@ namespace Bulky.DataAccess.Repository.IRepository
    public interface IRepository<T> where T : class
     {
         //T - category , now we will define all the method that will need for category 
-        IEnumerable<T> GetAll(string? includeProperties = null);
+        IEnumerable<T> GetAll(Expression<Func<T, bool>> ? filter =null,string? includeProperties = null);
         T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked=false);// this method will get any particular category using id;
         void Add(T entity);
        
