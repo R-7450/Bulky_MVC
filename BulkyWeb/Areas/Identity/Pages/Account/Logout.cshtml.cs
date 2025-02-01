@@ -26,7 +26,7 @@ namespace BulkyWeb.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
-            HttpContext.Session.Clear();// if a user is logged out then number of items count will set to zero on  UI main page
+          
             _logger.LogInformation("User logged out.");
             if (returnUrl != null)
             {
