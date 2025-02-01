@@ -17,7 +17,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 
 
 // setup to add authentication services using Entity Framework Core.It uses ApplicationDbContext (your database context) to persist identity-related data to your database.
-builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 
 // providing default url if any user try to access page without login .
@@ -30,10 +30,18 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 });
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>                      // it is used to add sessions in the project
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(100);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IEmailSender,EmailSender>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 var app = builder.Build();
 
 
@@ -53,6 +61,7 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
+app.UseSession();
 app.MapRazorPages();
 
 app.MapControllerRoute(
