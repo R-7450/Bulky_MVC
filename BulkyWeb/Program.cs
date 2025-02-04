@@ -1,12 +1,14 @@
 
 
 using Bulky.DataAccess.Data;
+using Bulky.DataAccess.DBInitializer;
 using Bulky.DataAccess.Repository;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +40,7 @@ builder.Services.AddSession(options =>                      // it is used to add
     options.Cookie.IsEssential = true;
 });
 
-
+builder.Services.AddScoped<IDBInitializer,DBInitializer>();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
@@ -62,6 +64,7 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 app.UseSession();
+SeedDatabse();
 app.MapRazorPages();
 
 app.MapControllerRoute(
@@ -69,3 +72,12 @@ app.MapControllerRoute(
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+void SeedDatabse()
+{
+    using(var scope=app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDBInitializer>();
+        dbInitializer.Initialize();
+    }
+}
