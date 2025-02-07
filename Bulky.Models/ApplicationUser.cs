@@ -25,7 +25,10 @@ namespace Bulky.Models
         [ForeignKey( "CompanyId")]
         [ValidateNever]
 
-       public Company Company { get; set; }
+       public Company? Company { get; set; }
+        [NotMapped] // this keyword ensure below field is not stored in database
+
+        public string Role { get; set; }
      
 
 
