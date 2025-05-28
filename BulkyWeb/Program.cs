@@ -71,7 +71,16 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+try
+{
+    app.Run();
+}
+catch (Exception ex)
+{
+    File.WriteAllText("startup-error.txt", ex.ToString());
+    throw;
+}
+
 
 void SeedDatabse()
 {
