@@ -32,11 +32,18 @@
     <ProjectReference Include="..\Bulky.Utility\Bulky.Utility.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\images\product\" />
-  </ItemGroup>
+	<!-- 
+	// works locally all image showing, but for azure 
+	//You need to explicitly include the files inside the folder and mark them as Content for deployment.
 
-  <ItemGroup>
+	
+	-->
+	<ItemGroup>
+		<Content Include="wwwroot\images\**\*.*" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
+	
+
+	<ItemGroup>
     <Content Update="Areas\Admin\Views\Company\Index.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
