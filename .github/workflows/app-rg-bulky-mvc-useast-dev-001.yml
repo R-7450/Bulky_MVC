@@ -5,7 +5,7 @@ on:
     - master
 env:
   AZURE_WEBAPP_NAME: app-rg-bulky-mvc-useast-dev-001
-  AZURE_WEBAPP_PACKAGE_PATH: BulkyWeb\published
+  AZURE_WEBAPP_PACKAGE_PATH: BulkyWeb/published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 9.0.x
   WORKING_DIRECTORY: BulkyWeb
