@@ -10,12 +10,13 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure()));
 
 
 
@@ -80,6 +81,15 @@ void SeedDatabse()
     using(var scope=app.Services.CreateScope())
     {
         var dbInitializer = scope.ServiceProvider.GetRequiredService<IDBInitializer>();
-        dbInitializer.Initialize();
+        try
+        {
+            dbInitializer.Initialize();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            // Optionally: Retry or skip to keep app running
+        }
+
     }
 }
