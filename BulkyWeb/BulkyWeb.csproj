@@ -39,9 +39,10 @@
 	
 	-->
 	<ItemGroup>
-		<Content Include="wwwroot\images\**\*.*" CopyToOutputDirectory="PreserveNewest" />
+		<Folder Include="wwwroot\images\product\" />
 	</ItemGroup>
-	
+
+
 
 	<ItemGroup>
     <Content Update="Areas\Admin\Views\Company\Index.cshtml">
@@ -55,6 +56,39 @@
     <Content Update="Areas\Identity\Pages\Account\Manage\_ViewStart.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\images\product\0882e236-aa21-4ee0-8083-81a792974ea6.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\product\29166177-4b3d-4ee0-8fa6-b31143ad2c2e.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\product\4beeb89a-df7d-4577-abc1-631e93a21f72.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\product\68d03e9d-0648-4459-a763-4406c0b167df.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\product\947cb18b-1c3c-4afb-8315-a979a3c58072.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\product\9e74752b-a0c2-4374-b967-b6ec825871b7.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\product\a2be2199-7dea-45ab-a51c-64dbf771897c.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\product\bf4949a0-e6a7-40e1-acb7-2e8d91400a0b.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\product\e42b7d83-c940-4935-90fc-e3ac6d1a432b.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\product\eb06a767-a07f-4e77-a059-0e29f310655d.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\images\product\eb577618-17db-40b2-aa84-662f9ae617aa.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
